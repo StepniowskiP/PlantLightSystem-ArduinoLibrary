@@ -3,7 +3,6 @@
 /** PlantLightSystem */
 
 PlantLightSystem::PlantLightSystem() {}
-
 PlantLightSystem::~PlantLightSystem() {}
 
 /** DHT */
@@ -13,6 +12,7 @@ PlantLightSystem::~PlantLightSystem() {}
  */
 void PlantLightSystem::initialize_DHT()
 {
+    this->show_message(MESSAGE_INFO, "Initializing DHT Sensor...");
     SimpleDHT11 dht(DHT_PIN);
     Serial.println(F("Initializing DHT sensor..."));
     this->_DHT_Sensor = dht;
@@ -58,7 +58,7 @@ float PlantLightSystem::get_humidity()
     Serial.print(this->_humidity);
     Serial.println(F(" %"));
 
-    return this->_temperature;
+    return this->_humidity;
 }
 
 /** LCD */
@@ -75,6 +75,8 @@ void PlantLightSystem::initialize_LCD()
     this->_LCD_Display.init();
     // Turn on backlight
     this->_LCD_Display.backlight();
+
+    this->show_message(MESSAGE_INFO, "Initializing LCD Module...");
 }
 
 /**
@@ -117,5 +119,51 @@ void PlantLightSystem::show_message(int8_t type, const char *message)
             this->_LCD_Display.setCursor(j + 1, 1);
             delay(300);
         }
+        delay(1500);
     }
+}
+
+/** Relay */
+
+/**
+ * @brief Initialize relay board
+ */
+void PlantLightSystem::initialize_relay(int *relay_pins)
+{
+
+    this->show_message(MESSAGE_INFO, "Initializing Relay Module...");
+
+    for (int this_pin = 0; this_pin < NUMBER_OF_CHANNELS; this_pin++)
+    {
+        Serial.println("Initializing relay pin: " + (String)relay_pins[this_pin]);
+        pinMode(relay_pins[this_pin], LOW);
+        this->_relay_channels[this_pin] = RelayChannel(relay_pins[this_pin], LOW);
+        delay(300);
+    }
+}
+
+/**
+ * @brief Turn relay channel ON/OFF on given pin
+ */
+void PlantLightSystem::change_relay_state_on_pin(int relay_pin, const char *state)
+{
+
+    int channel_state = (!strcmp(state, RELAY_ON)) ? HIGH : LOW;
+
+    Serial.println("Setting relay channel: " + (String)relay_pin + " " + state);
+
+    for (int channel = 0; channel < NUMBER_OF_CHANNELS; channel++)
+    {
+        if (this->_relay_channels[channel].get_channel_pin() == relay_pin)
+        {
+            if (this->_relay_channels[channel].get_channel_state() == channel_state)
+            {
+                Serial.println(F("Channel is already ON. Nothing to do..."));
+                return;
+            }
+            pinMode(relay_pin, channel_state);
+            this->_relay_channels[channel].set_channel_state(channel_state);
+        }
+    }
+    delay(500);
 }

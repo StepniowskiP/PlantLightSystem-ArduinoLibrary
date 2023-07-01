@@ -10,6 +10,7 @@
 #include <Wire.h>
 
 #include "constants.h"
+#include "RelayChannel.h"
 
 class PlantLightSystem
 {
@@ -20,6 +21,8 @@ private:
 
     float _temperature;
     float _humidity;
+
+    RelayChannel _relay_channels[NUMBER_OF_CHANNELS];
 
 public:
     PlantLightSystem();
@@ -34,6 +37,10 @@ public:
     /* LCD */
     void initialize_LCD();
     void show_message(int8_t type, const char *message);
+
+    /* Relay */
+    void initialize_relay(int *relay_pins);
+    void change_relay_state_on_pin(int relay_pin, const char *state);
 };
 
 #endif /* PLANTLIGHTSYSTEM_h */
