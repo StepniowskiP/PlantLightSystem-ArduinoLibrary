@@ -2,29 +2,101 @@
 #ifndef CONSTANTS_h
 #define CONSTANTS_h
 
-/**	PlantLightSystem */
+#include <Arduino.h>
 
-#define LOGGING 1
-#define BAUD_RATE 9600
+/* Plant Lamp System */
+namespace PLS
+{
+    const uint16_t BAUD_RATE = 9600;
+    const uint8_t MESSAGE_INFO = 0;
+    const uint8_t MESSAGE_ERROR = 1;
+    const uint8_t LOGGING = 1;
+}
 
-#define MESSAGE_INFO 0
-#define MESSAGE_ERROR 1
+/* Temperature and Humidity Sensor */
+namespace DHT
+{
+    const uint8_t SUCCESS = 0;
+    const uint8_t PIN = 9;
+    const uint16_t TYPE = 22;
+}
 
-/**	DHT */
 
-#define DHT_SUCCESS 0
-#define DHT_PIN 9
+/* Liquid Crystal Display */
+namespace LCD
+{
+    const uint8_t ADDRESS = 0x27;
+    const uint8_t NUMBER_OF_COLUMNS = 16;
+    const uint8_t NUMBER_OF_ROWS = 2;
 
-/**	LCD */
+    namespace HEADER
+    {
+        const char INFO[] = "PLS INFO:";
+        const char ERROR[] = "PLS ERROR!";
+    }
 
-#define LCD_ADDRESS 0x27
-#define LCD_COLUMNS 16
-#define LCD_ROWS 2
+}
 
-/**	Relay */
+/* Relay Board */
+namespace RELAY
+{
+    const uint8_t NUMBER_OF_CHANNELS = 4;
+    const uint8_t MAX_NUMBER_OF_CHANNELS = 8;
+    const uint8_t NUMBER_OF_PROPERTIES = 2;
 
-#define NUMBER_OF_CHANNELS 4
-#define NUMBER_OF_PROPERTIES 2
-#define RELAY_ON "ON"
+    const char ON[] = "ON";
+    const char OFF[] = "OFF";
+}
+
+/* Bluetooth Module */
+namespace HC05
+{
+    const uint8_t RX_PIN = 11;
+    const uint8_t TX_PIN = 12;
+    const uint16_t BAUD_RATE = 9600;
+
+}
+
+/* Command settings and mapping for Plant Light System */
+namespace COMMAND
+{
+    const uint8_t NUMBER_OF_COMMANDS = 19;
+    const uint8_t MAX_LENGTH = 13;
+
+    const uint8_t STATUS_SUCCESS = 200;
+    const uint8_t STATUS_FAILURE = 0;
+    const uint16_t STATUS_NOT_FOUND = 404;
+
+    namespace TURN_ON
+    {
+        const uint8_t LAMP_1 = 1;
+        const uint8_t LAMP_2 = 2;
+        const uint8_t LAMP_3 = 3;
+        const uint8_t LAMP_4 = 4;
+        const uint8_t LAMP_5 = 5;
+        const uint8_t LAMP_6 = 6;
+        const uint8_t LAMP_7 = 7;
+        const uint8_t LAMP_8 = 8;
+    }
+
+    namespace TURN_OFF
+    {
+        const uint8_t LAMP_1 = 11;
+        const uint8_t LAMP_2 = 12;
+        const uint8_t LAMP_3 = 13;
+        const uint8_t LAMP_4 = 14;
+        const uint8_t LAMP_5 = 15;
+        const uint8_t LAMP_6 = 16;
+        const uint8_t LAMP_7 = 17;
+        const uint8_t LAMP_8 = 18;
+    }
+
+    namespace OTHER
+    {
+        const uint8_t GET_HUMIDITY = 101;
+        const uint8_t GET_TEMPERATURE = 102;
+        const uint8_t TEST_PLS_SYSTEM = 200;
+    }
+}
 
 #endif /* CONSTANTS_h */

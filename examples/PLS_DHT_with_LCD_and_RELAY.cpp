@@ -10,7 +10,7 @@ void setup()
     pls.initialize_LCD();
     pls.initialize_DHT();
 
-    int relay_pins[NUMBER_OF_CHANNELS] = {2, 3, 4, 6};
+    int relay_pins[RELAY::NUMBER_OF_CHANNELS] = {2, 3, 4, 6};
     pls.initialize_relay(relay_pins);
 }
 
@@ -21,7 +21,7 @@ void loop()
     pls.change_relay_state_on_pin(6, "ON");
 
     // Check DHT sensor for errors
-    if (int check_code = pls.get_dht_data() != DHT_SUCCESS)
+    if (int check_code = pls.get_dht_data() != DHT::SUCCESS)
     {
         Serial.print(F("Read DHT11 failed, error="));
         Serial.println(check_code);
@@ -37,7 +37,7 @@ void loop()
     strcpy(message, "Humidity = ");
     strcat(message, floatVal);
     strcat(message, " %");
-    pls.show_message(MESSAGE_INFO, message);
+    pls.show_message(PLS::MESSAGE_INFO, message);
 
     delay(2000);
 
@@ -51,7 +51,7 @@ void loop()
     strcpy(message, "Temperature = ");
     strcat(message, floatVal);
     strcat(message, " *C");
-    pls.show_message(MESSAGE_INFO, message);
+    pls.show_message(PLS::MESSAGE_INFO, message);
 
     delay(2500);
 }

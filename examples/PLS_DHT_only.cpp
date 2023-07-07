@@ -12,7 +12,7 @@ void setup()
 void loop()
 {
     // Check DHT sensor for errors
-    if (int check_code = pls.get_dht_data() != DHT_SUCCESS)
+    if (int check_code = pls.get_dht_data() != DHT::SUCCESS)
     {
         Serial.print(F("Read DHT11 failed, error="));
         Serial.println(check_code);

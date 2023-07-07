@@ -13,7 +13,7 @@ void setup()
 void loop()
 {
     // Check DHT sensor for errors
-    if (int check_code = pls.get_dht_data() != DHT_SUCCESS)
+    if (int check_code = pls.get_dht_data() != DHT::SUCCESS)
     {
         Serial.print(F("Read DHT11 failed, error="));
         Serial.println(check_code);
@@ -29,7 +29,7 @@ void loop()
     strcpy(message, "Humidity = ");
     strcat(message, floatVal);
     strcat(message, " %");
-    pls.show_message(MESSAGE_INFO, message);
+    pls.show_message(PLS::MESSAGE_INFO, message);
 
     delay(2000);
 
@@ -43,7 +43,7 @@ void loop()
     strcpy(message, "Temperature = ");
     strcat(message, floatVal);
     strcat(message, " *C");
-    pls.show_message(MESSAGE_INFO, message);
+    pls.show_message(PLS::MESSAGE_INFO, message);
 
     delay(2000);
 }
