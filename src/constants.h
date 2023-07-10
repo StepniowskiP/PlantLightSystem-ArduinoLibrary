@@ -11,6 +11,13 @@ namespace PLS
     const uint8_t MESSAGE_INFO = 0;
     const uint8_t MESSAGE_ERROR = 1;
     const uint8_t LOGGING = 1;
+
+    const bool DHT = true;
+    const bool LCD = true;
+    const bool RELAY = true;
+    const bool BLUETOOTH = true;
+
+    const char WELCOME_MSG[] = "All modules ready! Welcome!";
 }
 
 /* Temperature and Humidity Sensor */
@@ -21,13 +28,13 @@ namespace DHT
     const uint16_t TYPE = 22;
 }
 
-
 /* Liquid Crystal Display */
 namespace LCD
 {
     const uint8_t ADDRESS = 0x27;
     const uint8_t NUMBER_OF_COLUMNS = 16;
     const uint8_t NUMBER_OF_ROWS = 2;
+    const bool BACKLIGHT_ON_START = true;
 
     namespace HEADER
     {
@@ -46,6 +53,8 @@ namespace RELAY
 
     const char ON[] = "ON";
     const char OFF[] = "OFF";
+
+    const uint8_t RELAY_PINS[RELAY::NUMBER_OF_CHANNELS] = {2, 3, 4, 6};
 }
 
 /* Bluetooth Module */
