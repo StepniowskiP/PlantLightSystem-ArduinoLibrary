@@ -11,7 +11,7 @@ void setup()
     pls.initialize_DHT();
 
     int relay_pins[RELAY::NUMBER_OF_CHANNELS] = {2, 3, 4, 6};
-    pls.initialize_relay(relay_pins);
+    // pls.initialize_relay(relay_pins);
 }
 
 void loop()

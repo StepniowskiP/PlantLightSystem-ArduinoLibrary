@@ -8,16 +8,16 @@
 class LCDPanel{
     private:
         LiquidCrystal_I2C _lcd;
-        bool _backlight_on_startup;
 
     public:
+
+        bool backlight;
 
         LCDPanel();
         ~LCDPanel();
 
         void initialize_LCD();
-        void show_message(int8_t type, const char *message);
-        void show_welcome_message(char *welcome_msg);
+        void show_message(int8_t type, String message);
         void backlight_on();
         void backlight_off();
 };

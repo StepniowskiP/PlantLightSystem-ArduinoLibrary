@@ -19,12 +19,14 @@ void LCDPanel::initialize_LCD()
 
     _lcd = lcd;
     _lcd.init();
+
+    backlight = LCD::BACKLIGHT_ON_START;
 }
 
 /**
  * @brief Show message on LCD. First line is stationary, second one is scrolling if longer than 16 characters.
  */
-void LCDPanel::show_message(int8_t type, const char *message)
+void LCDPanel::show_message(int8_t type, String message)
 {
     // Clear display
     _lcd.clear();
@@ -45,20 +47,20 @@ void LCDPanel::show_message(int8_t type, const char *message)
     _lcd.setCursor(0, 1);
 
     // For messages shorter than 17 characters
-    if (strlen(message) <= LCD::NUMBER_OF_COLUMNS)
+    if (message.length() <= LCD::NUMBER_OF_COLUMNS)
     {
         _lcd.print(message);
     }
 
     // For messages longer than 17 characters
-    if (strlen(message) > LCD::NUMBER_OF_COLUMNS)
+    if (message.length() > LCD::NUMBER_OF_COLUMNS)
     {
         for (unsigned int i = 0; i <= LCD::NUMBER_OF_COLUMNS; i++)
         {
             _lcd.write(message[i]);
         }
         delay(1500);
-        for (unsigned int j = LCD::NUMBER_OF_COLUMNS + 1; j <= strlen(message); j++)
+        for (unsigned int j = LCD::NUMBER_OF_COLUMNS + 1; j <= message.length(); j++)
         {
             _lcd.write(message[j]);
             _lcd.scrollDisplayLeft();

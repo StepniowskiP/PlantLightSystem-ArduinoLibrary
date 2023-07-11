@@ -1,10 +1,10 @@
 
-#ifndef CONSTANTS_h
-#define CONSTANTS_h
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 #include <Arduino.h>
 
-/* Plant Lamp System */
+/* Plant Light System */
 namespace PLS
 {
     const uint16_t BAUD_RATE = 9600;
@@ -12,12 +12,23 @@ namespace PLS
     const uint8_t MESSAGE_ERROR = 1;
     const uint8_t LOGGING = 1;
 
-    const bool DHT = true;
-    const bool LCD = true;
-    const bool RELAY = true;
-    const bool BLUETOOTH = true;
+    namespace COMPONENTS
+    {
+        const bool DHT = true;
+        const bool LCD = true;
+        const bool RELAY = true;
+        const bool BLUETOOTH = true;
+        const bool BUTTON_PANEL = true;
+        const bool MESSAGE_QUEUE = true;
+        const bool RTC = false;
+    }
 
     const char WELCOME_MSG[] = "All modules ready! Welcome!";
+    const char INSTRUCTION[] = "Messages ->";
+    const char HUM_NOT_AVAILABLE[] = "Humidity not available";
+    const char TEMP_NOT_AVAILABLE[] = "Temperature not available";
+    const char DATE_NOT_AVAILABLE[] = "Date not available";
+    const char TIME_NOT_AVAILABLE[] = "Time not available";
 }
 
 /* Temperature and Humidity Sensor */
@@ -34,6 +45,7 @@ namespace LCD
     const uint8_t ADDRESS = 0x27;
     const uint8_t NUMBER_OF_COLUMNS = 16;
     const uint8_t NUMBER_OF_ROWS = 2;
+
     const bool BACKLIGHT_ON_START = true;
 
     namespace HEADER
@@ -42,6 +54,43 @@ namespace LCD
         const char ERROR[] = "PLS ERROR!";
     }
 
+    namespace BUTTON_PANEL
+    {
+        const uint8_t PIN = A2;
+        const uint8_t DELAY = 200;
+
+        const uint16_t BACKLIGHT_MIN = 1010;
+        const uint16_t BACKLIGHT_MAX = 1020;
+
+        const uint16_t LEFT_MIN = 970;
+        const uint16_t LEFT_MAX = 980;
+
+        const uint16_t RIGHT_MIN = 925;
+        const uint16_t RIGHT_MAX = 935;
+
+        namespace EVENTS
+        {
+            const uint8_t BACKLIGHT = 1;
+            const uint8_t LEFT = 2;
+            const uint8_t RIGHT = 3;
+            const uint8_t BAD_EVENT = -1;
+        }
+    }
+
+    namespace MESSAGE_QUEUE
+    {
+        const uint8_t MAX_MESSAGES = 10;
+        const uint8_t MAX_MESSAGE_LENGTH = 50;
+
+        namespace RESERVED_INDEXES
+        {
+            const uint8_t INSTRUCTION = 0;
+            const uint8_t DATE = 1;
+            const uint8_t TIME = 2;
+            const uint8_t TEMPERATURE = 3;
+            const uint8_t HUMIDITY = 4;
+        }
+    }
 }
 
 /* Relay Board */
@@ -63,7 +112,6 @@ namespace HC05
     const uint8_t RX_PIN = 11;
     const uint8_t TX_PIN = 12;
     const uint16_t BAUD_RATE = 9600;
-
 }
 
 /* Command settings and mapping for Plant Light System */
@@ -71,9 +119,9 @@ namespace COMMAND
 {
     const uint8_t NUMBER_OF_COMMANDS = 19;
     const uint8_t MAX_LENGTH = 13;
-
     const uint8_t STATUS_SUCCESS = 200;
     const uint8_t STATUS_FAILURE = 0;
+
     const uint16_t STATUS_NOT_FOUND = 404;
 
     namespace TURN_ON
@@ -108,4 +156,4 @@ namespace COMMAND
     }
 }
 
-#endif /* CONSTANTS_h */
+#endif /* CONSTANTS_H */

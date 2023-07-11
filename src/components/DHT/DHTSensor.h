@@ -15,16 +15,14 @@ class DHTSensor{
 
         float temperature;
         float humidity;
+        char str_temperature[8];
+        char str_humidity[8];
 
         DHTSensor();
         ~DHTSensor();
 
         void initialize_DHT();
-
         uint8_t get_dht_data();
-
-        float get_temperature();
-        float get_humidity();
 
 };
 

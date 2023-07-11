@@ -62,5 +62,11 @@ uint8_t DHTSensor::get_dht_data()
         }
     }
 
+    str_temperature[0] = '\0';
+    dtostrf(temperature, 5, 2, str_temperature);
+
+    str_humidity[0] = '\0';
+    dtostrf(humidity, 5, 2, str_humidity);
+
     return error_check;
 }
