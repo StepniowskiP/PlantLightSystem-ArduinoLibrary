@@ -10,16 +10,16 @@ namespace PLS
     const uint16_t BAUD_RATE = 9600;
     const uint8_t MESSAGE_INFO = 0;
     const uint8_t MESSAGE_ERROR = 1;
-    const uint8_t LOGGING = 1;
+    const uint8_t LOGGING = 0;
 
     namespace COMPONENTS
     {
-        const bool DHT = true;
-        const bool LCD = true;
-        const bool RELAY = true;
-        const bool BLUETOOTH = true;
-        const bool BUTTON_PANEL = true;
-        const bool MESSAGE_QUEUE = true;
+        const bool DHT = false;
+        const bool LCD = false;
+        const bool RELAY = false;
+        const bool BLUETOOTH = false;
+        const bool BUTTON_PANEL = false;
+        const bool MESSAGE_QUEUE = false;
         const bool RTC = false;
     }
 

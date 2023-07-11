@@ -23,12 +23,11 @@ class PlantLightSystem
 {
 
 private:
-    DHTSensor _DHTSensor;
-    RelayModule _RelayModule;
-
     void _populate_init_msg_queue();
 
 public:
+    DHTSensor _DHTSensor;
+    RelayModule _RelayModule;
     MessageQueue _MessageQueue;
     Bluetooth _Bluetooth;
     LCDPanel _LCDPanel;
