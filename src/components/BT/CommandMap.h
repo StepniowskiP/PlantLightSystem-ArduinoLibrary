@@ -6,18 +6,17 @@
 
 class CommandMap
 {
-    private:
-        const char* _cmd = "";
-        int _cmd_value;
+private:
+    const char *_cmd = "";
+    uint8_t _cmd_value;
 
-    public:
-        CommandMap();
-        ~CommandMap();
+public:
+    CommandMap();
+    ~CommandMap();
 
-        CommandMap(const char* cmd, uint8_t cmd_value);
-        int get_cmd_value();
-        const char *get_cmd();
-
+    CommandMap(const char *cmd, uint8_t cmd_value);
+    uint8_t get_cmd_value();
+    const char *get_cmd();
 };
 
 #endif /** COMMANDMAP_H */

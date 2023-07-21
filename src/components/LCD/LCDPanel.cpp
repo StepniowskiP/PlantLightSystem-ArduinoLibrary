@@ -1,7 +1,6 @@
 #include "LCDPanel.h"
 
-
-LCDPanel::LCDPanel(){}
+LCDPanel::LCDPanel() {}
 
 LCDPanel::~LCDPanel() {}
 
@@ -26,7 +25,7 @@ void LCDPanel::initialize_LCD()
 /**
  * @brief Show message on LCD. First line is stationary, second one is scrolling if longer than 16 characters.
  */
-void LCDPanel::show_message(int8_t type, String message)
+void LCDPanel::show_message(uint8_t type, const String &message)
 {
     // Clear display
     _lcd.clear();
@@ -55,12 +54,12 @@ void LCDPanel::show_message(int8_t type, String message)
     // For messages longer than 17 characters
     if (message.length() > LCD::NUMBER_OF_COLUMNS)
     {
-        for (unsigned int i = 0; i <= LCD::NUMBER_OF_COLUMNS; i++)
+        for (uint8_t i = 0; i <= LCD::NUMBER_OF_COLUMNS; i++)
         {
             _lcd.write(message[i]);
         }
         delay(1500);
-        for (unsigned int j = LCD::NUMBER_OF_COLUMNS + 1; j <= message.length(); j++)
+        for (uint8_t j = LCD::NUMBER_OF_COLUMNS + 1; j <= message.length(); j++)
         {
             _lcd.write(message[j]);
             _lcd.scrollDisplayLeft();
@@ -73,17 +72,19 @@ void LCDPanel::show_message(int8_t type, String message)
     }
 }
 
-
-
-void LCDPanel::backlight_on(){
-    if(PLS::LOGGING){
+void LCDPanel::backlight_on()
+{
+    if (PLS::LOGGING)
+    {
         Serial.println(F("LCD backlight ON"));
     }
     _lcd.backlight();
 }
 
-void LCDPanel::backlight_off(){
-    if(PLS::LOGGING){
+void LCDPanel::backlight_off()
+{
+    if (PLS::LOGGING)
+    {
         Serial.println(F("LCD backlight OFF"));
     }
     _lcd.noBacklight();

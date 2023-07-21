@@ -4,20 +4,19 @@
 #include "CommandMap.h"
 #include "../../constants.h"
 
-class Bluetooth{
+class Bluetooth
+{
 
-    private:
-        CommandMap _cmd_map[COMMAND::NUMBER_OF_COMMANDS];
+private:
+    CommandMap _cmd_map[COMMAND::NUMBER_OF_COMMANDS];
 
-    public:
+public:
+    Bluetooth();
+    ~Bluetooth();
 
-        Bluetooth();
-        ~Bluetooth();
-
-        void initialize_bluetooth();
-        void populate_cmd_map();
-        uint16_t validate_command(char *command);
+    void initialize_bluetooth();
+    void populate_cmd_map();
+    uint16_t validate_command(char *command);
 };
-
 
 #endif /* BLUETOOTH_H */

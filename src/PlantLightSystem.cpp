@@ -230,11 +230,13 @@ void PlantLightSystem::_populate_init_msg_queue()
         Serial.println(F("Populating initial message queue"));
     }
 
-    _MessageQueue.add_reserved_message((char *)PLS::INSTRUCTION, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::INSTRUCTION);
+    _MessageQueue.add_reserved_message(PLS::INSTRUCTION, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::INSTRUCTION);
 
-    if(PLS::COMPONENTS::RTC){
-
-    }else{
+    if (PLS::COMPONENTS::RTC)
+    {
+    }
+    else
+    {
         _MessageQueue.add_reserved_message(PLS::DATE_NOT_AVAILABLE, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE);
         _MessageQueue.add_reserved_message(PLS::TIME_NOT_AVAILABLE, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME);
     }
@@ -250,15 +252,15 @@ void PlantLightSystem::_populate_init_msg_queue()
         message[0] = '\0';
         sprintf(message, "Humidity: %s %%", _DHTSensor.str_humidity);
         _MessageQueue.add_reserved_message(message, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::HUMIDITY);
-
     }
     else
     {
-        _MessageQueue.add_reserved_message((char *)PLS::TEMP_NOT_AVAILABLE, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TEMPERATURE);
-        _MessageQueue.add_reserved_message((char *)PLS::HUM_NOT_AVAILABLE, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::HUMIDITY);
+        _MessageQueue.add_reserved_message(PLS::TEMP_NOT_AVAILABLE, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TEMPERATURE);
+        _MessageQueue.add_reserved_message(PLS::HUM_NOT_AVAILABLE, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::HUMIDITY);
     }
 
-    if(_MessageQueue.current_message == 0){
+    if (_MessageQueue.current_message == 0)
+    {
         _LCDPanel.show_message(PLS::MESSAGE_INFO, PLS::INSTRUCTION);
     }
 }
@@ -310,7 +312,7 @@ void PlantLightSystem::execute_button_command(int8_t event_number)
             break;
         }
         _LCDPanel.show_message(PLS::MESSAGE_INFO, _MessageQueue.get_message_at_index(_MessageQueue.current_message + 1));
-        _MessageQueue.current_message++;
+        ++_MessageQueue.current_message;
         delay(LCD::BUTTON_PANEL::DELAY);
         break;
     default:

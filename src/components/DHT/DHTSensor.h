@@ -5,26 +5,24 @@
 
 #include "../../constants.h"
 
-class DHTSensor{
+class DHTSensor
+{
 
-    private:
-        SimpleDHT11 _DHT_Sensor11;
-        SimpleDHT22 _DHT_Sensor22;
+private:
+    SimpleDHT11 _DHT_Sensor11;
+    SimpleDHT22 _DHT_Sensor22;
 
-    public:
+public:
+    float temperature;
+    float humidity;
+    char str_temperature[8];
+    char str_humidity[8];
 
-        float temperature;
-        float humidity;
-        char str_temperature[8];
-        char str_humidity[8];
+    DHTSensor();
+    ~DHTSensor();
 
-        DHTSensor();
-        ~DHTSensor();
-
-        void initialize_DHT();
-        uint8_t get_dht_data();
-
+    void initialize_DHT();
+    uint8_t get_dht_data();
 };
-
 
 #endif /* DHT_SENSOR_H */

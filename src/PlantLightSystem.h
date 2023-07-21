@@ -18,7 +18,6 @@
 #include "components/RELAY/RelayModule.h"
 #include "components/BT/Bluetooth.h"
 
-
 class PlantLightSystem
 {
 
@@ -45,7 +44,6 @@ public:
     float get_temperature();
     float get_humidity();
     float execute_dht_command(uint16_t command);
-
 };
 
 #endif /* PLANTLIGHTSYSTEM_h */

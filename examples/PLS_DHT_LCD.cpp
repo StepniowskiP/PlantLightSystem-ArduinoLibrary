@@ -3,8 +3,12 @@ author: PStepniowski
 description: PLS example with DHT sensor and LCD 16x2 screen
 
 To enable DHT change in constants.h file:
+PLS::COMPONENTS::DHT -> true
+
+To enable LCD change in constants.h file:
 PLS::COMPONENTS::LCD -> true
 
+Customize LCD:
 LCD::ADRESS -> I2C LCD adress
 LCD::NUMBER_OF_COLUMNS -> Number of columns on your display (tested only for 16)
 LCD::NUMBER_OF_ROWS -> Number of rows on your display (tested only for 2)

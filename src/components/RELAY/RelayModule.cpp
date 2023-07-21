@@ -1,8 +1,7 @@
 #include "RelayModule.h"
 
-
-RelayModule::RelayModule(){}
-RelayModule::~RelayModule(){}
+RelayModule::RelayModule() {}
+RelayModule::~RelayModule() {}
 
 /**
  * @brief Initialize relay board
@@ -35,7 +34,7 @@ void RelayModule::initialize_relay()
 void RelayModule::change_relay_state_on_pin(uint8_t relay_pin, const char *state)
 {
 
-    int channel_state = (!strcmp(state, RELAY::ON)) ? HIGH : LOW;
+    uint8_t channel_state = (!strcmp(state, RELAY::ON)) ? HIGH : LOW;
 
     if (PLS::LOGGING)
     {
@@ -45,7 +44,7 @@ void RelayModule::change_relay_state_on_pin(uint8_t relay_pin, const char *state
         Serial.println(state);
     }
 
-    for (int channel = 0; channel < RELAY::NUMBER_OF_CHANNELS; channel++)
+    for (uint8_t channel = 0; channel < RELAY::NUMBER_OF_CHANNELS; channel++)
     {
         if (relay_channels[channel].get_channel_pin() == relay_pin)
         {

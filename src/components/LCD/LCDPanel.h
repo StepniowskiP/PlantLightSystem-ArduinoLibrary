@@ -17,7 +17,7 @@ class LCDPanel{
         ~LCDPanel();
 
         void initialize_LCD();
-        void show_message(int8_t type, String message);
+        void show_message(uint8_t type, const String &message);
         void backlight_on();
         void backlight_off();
 };

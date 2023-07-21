@@ -10,17 +10,17 @@ namespace PLS
     const uint16_t BAUD_RATE = 9600;
     const uint8_t MESSAGE_INFO = 0;
     const uint8_t MESSAGE_ERROR = 1;
-    const uint8_t LOGGING = 0;
+    const uint8_t LOGGING = 1;
 
     namespace COMPONENTS
     {
-        const bool DHT = false;
-        const bool LCD = false;
-        const bool RELAY = false;
-        const bool BLUETOOTH = false;
-        const bool BUTTON_PANEL = false;
-        const bool MESSAGE_QUEUE = false;
-        const bool RTC = false;
+        const bool DHT = true;
+        const bool LCD = true;
+        const bool RELAY = true;
+        const bool BLUETOOTH = true;
+        const bool BUTTON_PANEL = true;
+        const bool MESSAGE_QUEUE = true;
+        const bool RTC = true;
     }
 
     const char WELCOME_MSG[] = "All modules ready! Welcome!";
@@ -35,7 +35,7 @@ namespace PLS
 namespace DHT
 {
     const uint8_t SUCCESS = 0;
-    const uint8_t PIN = 9;
+    const uint8_t PIN = 12;
     const uint16_t TYPE = 22;
 }
 
@@ -103,7 +103,7 @@ namespace RELAY
     const char ON[] = "ON";
     const char OFF[] = "OFF";
 
-    const uint8_t RELAY_PINS[RELAY::NUMBER_OF_CHANNELS] = {2, 3, 4, 6};
+    const uint8_t RELAY_PINS[RELAY::NUMBER_OF_CHANNELS] = {2, 3, 4, 5};
 }
 
 /* Bluetooth Module */

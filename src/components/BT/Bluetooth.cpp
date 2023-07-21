@@ -1,11 +1,8 @@
 #include "Bluetooth.h"
 
+Bluetooth::Bluetooth() {}
 
-Bluetooth::Bluetooth(){}
-
-
-Bluetooth::~Bluetooth(){}
-
+Bluetooth::~Bluetooth() {}
 
 void Bluetooth::initialize_bluetooth()
 {
@@ -16,8 +13,8 @@ void Bluetooth::initialize_bluetooth()
     populate_cmd_map();
 }
 
-
-void Bluetooth::populate_cmd_map(){
+void Bluetooth::populate_cmd_map()
+{
 
     if (PLS::LOGGING)
     {
@@ -50,12 +47,11 @@ void Bluetooth::populate_cmd_map(){
     _cmd_map[18] = CommandMap("TEST", COMMAND::OTHER::TEST_PLS_SYSTEM);
 }
 
-
 uint16_t Bluetooth::validate_command(char *command)
 {
-    int int_cmd = 0;
+    uint8_t int_cmd = 0;
 
-    for (int cmd = 0; cmd < COMMAND::NUMBER_OF_COMMANDS; cmd++)
+    for (uint8_t cmd = 0; cmd < COMMAND::NUMBER_OF_COMMANDS; cmd++)
     {
 
         if (!strcmp(command, _cmd_map[cmd].get_cmd()))
