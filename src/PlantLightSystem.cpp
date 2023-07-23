@@ -61,6 +61,13 @@ void PlantLightSystem::init_components()
             _populate_init_msg_queue();
         }
     }
+
+    // RTC
+    if (PLS::COMPONENTS::RTC)
+    {
+        _RealTimeClock = RealTimeClock();
+        _RealTimeClock.initialize_real_time_clock();
+    }
 }
 
 /**
@@ -234,6 +241,8 @@ void PlantLightSystem::_populate_init_msg_queue()
 
     if (PLS::COMPONENTS::RTC)
     {
+        _MessageQueue.add_reserved_message(_RealTimeClock.get_date(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE);
+        _MessageQueue.add_reserved_message(_RealTimeClock.get_time(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME);
     }
     else
     {
@@ -263,6 +272,46 @@ void PlantLightSystem::_populate_init_msg_queue()
     {
         _LCDPanel.show_message(PLS::MESSAGE_INFO, PLS::INSTRUCTION);
     }
+}
+
+bool PlantLightSystem::_update_messages_on_button_press(int8_t offset)
+{
+    if (offset != -1 || offset != 1)
+    {
+        return false;
+    }
+
+    if (PLS::COMPONENTS::RTC)
+    {
+        if (_MessageQueue.current_message + offset == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE)
+        {
+            _MessageQueue.update_reserved_message(_RealTimeClock.get_date(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE);
+        }
+        else if (_MessageQueue.current_message + offset == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME)
+        {
+            _MessageQueue.update_reserved_message(_RealTimeClock.get_time(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME);
+        }
+    }
+
+    if (PLS::COMPONENTS::DHT)
+    {
+        _DHTSensor.get_dht_data();
+
+        if (_MessageQueue.current_message + offset == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TEMPERATURE)
+        {
+            char message[LCD::MESSAGE_QUEUE::MAX_MESSAGE_LENGTH];
+            sprintf(message, "Temperature: %s *C", _DHTSensor.str_temperature);
+            _MessageQueue.update_reserved_message(message, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TEMPERATURE);
+        }
+        else if (_MessageQueue.current_message + offset == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::HUMIDITY)
+        {
+            char message[LCD::MESSAGE_QUEUE::MAX_MESSAGE_LENGTH];
+            sprintf(message, "Humidity: %s %%", _DHTSensor.str_humidity);
+            _MessageQueue.update_reserved_message(message, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::HUMIDITY);
+        }
+    }
+
+    return true;
 }
 
 void PlantLightSystem::execute_button_command(int8_t event_number)
@@ -302,18 +351,26 @@ void PlantLightSystem::execute_button_command(int8_t event_number)
         {
             break;
         }
+
+        _update_messages_on_button_press(-1);
+
         _LCDPanel.show_message(PLS::MESSAGE_INFO, _MessageQueue.get_message_at_index(_MessageQueue.current_message - 1));
-        _MessageQueue.current_message--;
+        --_MessageQueue.current_message;
         delay(LCD::BUTTON_PANEL::DELAY);
+
         break;
     case LCD::BUTTON_PANEL::EVENTS::RIGHT:
         if (_MessageQueue.current_message == LCD::MESSAGE_QUEUE::MAX_MESSAGES - 1)
         {
             break;
         }
+
+        _update_messages_on_button_press(1);
+
         _LCDPanel.show_message(PLS::MESSAGE_INFO, _MessageQueue.get_message_at_index(_MessageQueue.current_message + 1));
         ++_MessageQueue.current_message;
         delay(LCD::BUTTON_PANEL::DELAY);
+
         break;
     default:
         break;

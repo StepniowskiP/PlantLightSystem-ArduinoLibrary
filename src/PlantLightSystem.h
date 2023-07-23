@@ -17,12 +17,14 @@
 #include "components/DHT/DHTSensor.h"
 #include "components/RELAY/RelayModule.h"
 #include "components/BT/Bluetooth.h"
+#include "components/RTC/RealTimeClock.h"
 
 class PlantLightSystem
 {
 
 private:
     void _populate_init_msg_queue();
+    bool _update_messages_on_button_press(int8_t offset);
 
 public:
     DHTSensor _DHTSensor;
@@ -31,6 +33,7 @@ public:
     Bluetooth _Bluetooth;
     LCDPanel _LCDPanel;
     ButtonPanel _ButtonPanel;
+    RealTimeClock _RealTimeClock;
 
     PlantLightSystem();
     ~PlantLightSystem();

@@ -36,6 +36,21 @@ void MessageQueue::add_reserved_message(const String &message, uint8_t reserved_
     }
 }
 
+void MessageQueue::update_reserved_message(const String &message, uint8_t reserved_index)
+{
+    if(PLS::LOGGING){
+        Serial.print(F("Updating message: "));
+        Serial.print(get_message_at_index(reserved_index));
+        Serial.print(F(" to:"));
+        Serial.println(message);
+    }
+
+    if (reserved_index < LCD::MESSAGE_QUEUE::MAX_MESSAGES)
+    {
+        _messages[reserved_index] = message;
+    }
+}
+
 void MessageQueue::clear_messages()
 {
     for (uint8_t msg_iterator = 0; msg_iterator < LCD::MESSAGE_QUEUE::MAX_MESSAGES; msg_iterator++)

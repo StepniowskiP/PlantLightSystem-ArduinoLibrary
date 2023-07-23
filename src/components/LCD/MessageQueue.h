@@ -17,6 +17,7 @@ public:
     uint8_t current_message = 0;
 
     void add_message(const String &message);
+    void update_reserved_message(const String &message, uint8_t reserved_index);
     void add_reserved_message(const String &message, uint8_t reserved_index);
     void clear_messages();
 
