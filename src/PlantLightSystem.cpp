@@ -241,8 +241,13 @@ void PlantLightSystem::_populate_init_msg_queue()
 
     if (PLS::COMPONENTS::RTC)
     {
-        _MessageQueue.add_reserved_message(_RealTimeClock.get_date(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE);
-        _MessageQueue.add_reserved_message(_RealTimeClock.get_time(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME);
+        char message[LCD::MESSAGE_QUEUE::MAX_MESSAGE_LENGTH];
+        sprintf(message, "Time: %s", _RealTimeClock.get_time().c_str());
+        _MessageQueue.add_reserved_message(message, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME);
+
+        message[0] = '\0';
+        sprintf(message, "Date: %s", _RealTimeClock.get_date().c_str());
+        _MessageQueue.add_reserved_message(message, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE);
     }
     else
     {
@@ -276,20 +281,24 @@ void PlantLightSystem::_populate_init_msg_queue()
 
 bool PlantLightSystem::_update_messages_on_button_press(int8_t offset)
 {
-    if (offset != -1 || offset != 1)
+    if (offset != -1 && offset != 1)
     {
         return false;
     }
 
     if (PLS::COMPONENTS::RTC)
     {
-        if (_MessageQueue.current_message + offset == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE)
+        if (_MessageQueue.current_message + offset == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME)
         {
-            _MessageQueue.update_reserved_message(_RealTimeClock.get_date(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE);
+            char message[LCD::MESSAGE_QUEUE::MAX_MESSAGE_LENGTH];
+            sprintf(message, "Time: %s", _RealTimeClock.get_time().c_str());
+            _MessageQueue.update_reserved_message(message, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME);
         }
-        else if (_MessageQueue.current_message + offset == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME)
+        else if ((_MessageQueue.current_message + offset) == LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE)
         {
-            _MessageQueue.update_reserved_message(_RealTimeClock.get_time(), LCD::MESSAGE_QUEUE::RESERVED_INDEXES::TIME);
+            char message[LCD::MESSAGE_QUEUE::MAX_MESSAGE_LENGTH];
+            sprintf(message, "Date: %s", _RealTimeClock.get_date().c_str());
+            _MessageQueue.update_reserved_message(message, LCD::MESSAGE_QUEUE::RESERVED_INDEXES::DATE);
         }
     }
 

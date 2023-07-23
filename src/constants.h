@@ -14,12 +14,12 @@ namespace PLS
 
     namespace COMPONENTS
     {
-        const bool DHT = true;
-        const bool LCD = true;
-        const bool RELAY = true;
-        const bool BLUETOOTH = true;
-        const bool BUTTON_PANEL = true;
-        const bool MESSAGE_QUEUE = true;
+        const bool DHT = false;
+        const bool LCD = false;
+        const bool RELAY = false;
+        const bool BLUETOOTH = false;
+        const bool BUTTON_PANEL = false;
+        const bool MESSAGE_QUEUE = false;
         const bool RTC = true;
     }
 

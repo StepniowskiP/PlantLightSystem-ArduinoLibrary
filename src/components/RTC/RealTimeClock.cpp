@@ -69,7 +69,6 @@ bool RealTimeClock::_get_rtc_data()
             }
             else
             {
-
                 Serial.println(F("DS1307 read error!  Please check the circuitry."));
             }
         }
@@ -78,18 +77,15 @@ bool RealTimeClock::_get_rtc_data()
     return true;
 }
 
-const char *RealTimeClock::_format_number(uint8_t number)
+String RealTimeClock::_format_number(uint8_t number)
 {
-    char *str_number = new char[2];
+    String str_number = (String)number;
     if (number >= 0 && number < 10)
     {
-        printf(str_number, "0%d", number);
+        str_number = "0" + (String)number;
     }
-    else
-    {
-        printf(str_number, "%d", number);
-    }
-    return (const char *)str_number;
+
+    return str_number;
 }
 
 void RealTimeClock::initialize_real_time_clock()
@@ -101,11 +97,11 @@ void RealTimeClock::initialize_real_time_clock()
 
     if (!_get_rtc_data())
     {
-        set_time_based_on_computer_clock();
+        set_time_based_on_compiler_clock();
     }
 }
 
-bool RealTimeClock::set_time_based_on_computer_clock()
+bool RealTimeClock::set_time_based_on_compiler_clock()
 {
 
     const char *time = __TIME__;
@@ -191,7 +187,7 @@ bool RealTimeClock::set_time(uint8_t hour, uint8_t minute, uint8_t second)
     }
 }
 
-bool RealTimeClock::set_date(uint8_t wday, uint8_t day, uint8_t month, uint8_t year)
+bool RealTimeClock::set_date(uint8_t wday, uint8_t day, uint8_t month, uint16_t year)
 {
     if (!_get_rtc_data())
     {
@@ -201,7 +197,7 @@ bool RealTimeClock::set_date(uint8_t wday, uint8_t day, uint8_t month, uint8_t y
     tm.Wday = wday;
     tm.Day = day;
     tm.Month = month;
-    tm.Year = year;
+    tm.Year = year-1970;
 
     if (RTC.write(tm))
     {
@@ -218,7 +214,7 @@ bool RealTimeClock::set_date(uint8_t wday, uint8_t day, uint8_t month, uint8_t y
     }
 }
 
-bool RealTimeClock::set_time_and_date(uint8_t hour, uint8_t minute, uint8_t second, uint8_t wday, uint8_t day, uint8_t month, uint8_t year)
+bool RealTimeClock::set_time_and_date(uint8_t hour, uint8_t minute, uint8_t second, uint8_t wday, uint8_t day, uint8_t month, uint16_t year)
 {
 
     if (!set_time(hour, minute, second) || !set_date(wday, day, month, year))
@@ -228,28 +224,24 @@ bool RealTimeClock::set_time_and_date(uint8_t hour, uint8_t minute, uint8_t seco
     return true;
 }
 
-const char *RealTimeClock::get_time()
+String RealTimeClock::get_time()
 {
     if (!_get_rtc_data())
     {
         return "Error getting data from RTC module.";
     }
 
-    char time[8];
-    sprintf(time, "%s:%s:%s", _format_number(tm.Hour), _format_number(tm.Minute), _format_number(tm.Second));
-
-    return (const char *)time;
+    String time = _format_number(tm.Hour) + ":" + _format_number(tm.Minute) + ":" + _format_number(tm.Second);
+    return time;
 }
 
-const char *RealTimeClock::get_date()
+String RealTimeClock::get_date()
 {
     if (!_get_rtc_data())
     {
         return "Error getting data from RTC module.";
     }
 
-    char date[10];
-    sprintf(date, "%s/%s/%d", _format_number(tm.Day), _format_number(tm.Month), tm.Year);
-
-    return (const char *)date;
+    String date = _format_number(tm.Day) + "/" + _format_number(tm.Month) + "/" + (String)(1970 + tm.Year);
+    return date;
 }
